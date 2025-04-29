@@ -1,49 +1,50 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Header from "./Header";
-import HeroList from "./HeroList";
-import TextInsertion from "./TextInsertion";
-import { makeStyles } from "@fluentui/react-components";
-import { Ribbon24Regular, LockOpen24Regular, DesignIdeas24Regular } from "@fluentui/react-icons";
-import { insertText } from "../taskpane";
+import ParagraphManager from "./ParagraphManager";
+import { makeStyles, tokens } from "@fluentui/react-components";
+import { 
+  processParagraphs, 
+  updateParagraphById,
+  addCommentToParagraph,
+  highlightParagraph,
+  scrollToParagraph
+} from "../taskpane";
 
 const useStyles = makeStyles({
   root: {
-    minHeight: "100vh",
+    height: "100vh",
+    backgroundColor: tokens.colorNeutralBackground1,
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
   },
+  content: {
+    flex: 1,
+    padding: "4px 8px 8px",
+    overflowY: "auto",
+    display: "flex",
+    flexDirection: "column",
+  }
 });
 
-const App = (props) => {
-  const { title } = props;
+const App = () => {
   const styles = useStyles();
-  // The list items are static and won't change at runtime,
-  // so this should be an ordinary const, not a part of state.
-  const listItems = [
-    {
-      icon: <Ribbon24Regular />,
-      primaryText: "Achieve more with Office integration",
-    },
-    {
-      icon: <LockOpen24Regular />,
-      primaryText: "Unlock features and functionality",
-    },
-    {
-      icon: <DesignIdeas24Regular />,
-      primaryText: "Create and visualize like a pro",
-    },
-  ];
 
   return (
     <div className={styles.root}>
-      <Header logo="assets/logo-filled.png" title={title} message="Welcome" />
-      <HeroList message="Discover what this add-in can do for you today!" items={listItems} />
-      <TextInsertion insertText={insertText} />
+      <Header message="Document Analysis Tool" />
+      <div className={styles.content}>
+        <ParagraphManager 
+          processParagraphs={processParagraphs} 
+          updateParagraphById={updateParagraphById}
+          addCommentToParagraph={addCommentToParagraph}
+          highlightParagraph={highlightParagraph}
+          scrollToParagraph={scrollToParagraph}
+        />
+      </div>
     </div>
   );
-};
-
-App.propTypes = {
-  title: PropTypes.string,
 };
 
 export default App;

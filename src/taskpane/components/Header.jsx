@@ -1,38 +1,52 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import { Image, tokens, makeStyles } from "@fluentui/react-components";
+import { Text, makeStyles, tokens } from "@fluentui/react-components";
 
 const useStyles = makeStyles({
-  welcome__header: {
+  header: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "center",
-    paddingBottom: "30px",
-    paddingTop: "100px",
-    backgroundColor: tokens.colorNeutralBackground3,
+    justifyContent: "space-between",
+    padding: "6px 10px",
+    background: tokens.colorBrandBackground,
+    color: tokens.colorNeutralForegroundInverted,
+    boxShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
+    minHeight: "auto",
   },
-  message: {
-    fontSize: tokens.fontSizeHero900,
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "6px",
+  },
+  title: {
+    fontSize: tokens.fontSizeBase400,
+    fontWeight: tokens.fontWeightSemibold,
+    lineHeight: tokens.lineHeightBase100,
+  },
+  subtitle: {
+    fontSize: tokens.fontSizeBase200,
     fontWeight: tokens.fontWeightRegular,
-    fontColor: tokens.colorNeutralBackgroundStatic,
-  },
+    opacity: 0.9,
+  }
 });
 
 const Header = (props) => {
-  const { title, logo, message } = props;
+  const { message } = props;
   const styles = useStyles();
 
   return (
-    <section className={styles.welcome__header}>
-      <Image width="90" height="90" src={logo} alt={title} />
-      <h1 className={styles.message}>{message}</h1>
-    </section>
+    <header className={styles.header}>
+      <div className={styles.titleContainer}>
+        <Text className={styles.title}>Pramata</Text>
+        <Text className={styles.subtitle}>{message}</Text>
+      </div>
+    </header>
   );
 };
 
 Header.propTypes = {
-  title: PropTypes.string,
-  logo: PropTypes.string,
   message: PropTypes.string,
 };
 
